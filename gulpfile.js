@@ -5,6 +5,7 @@ const browserSync = require('browser-sync').create();
 const inject = require('gulp-inject');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
+const autoprefixer = require('gulp-autoprefixer');
 const image = require('gulp-image');
 
 gulp.task('serve', ['build'], function() {
@@ -38,12 +39,16 @@ gulp.task('sass', function() {
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest('./dist/styles'))
         .pipe(browserSync.stream());
 });
 
 gulp.task('js', function() {
-    return gulp.src('src/scripts/**/*.js')
+    return gulp.src('./src/scripts/**/*.js')
         .pipe(gulp.dest('dist/scripts'))
         .pipe(browserSync.stream());
 });
