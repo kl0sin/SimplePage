@@ -15,11 +15,12 @@ gulp.task('serve', ['build'], function() {
     gulp.watch('src/*.html', ['html', 'build']);
     gulp.watch('src/styles/**/*.scss', ['sass', 'inject']);
     gulp.watch('src/scripts/**/*.js', ['js', 'inject']);
+    gulp.watch('src/**/*.json', ['json']);
     gulp.watch('src/media/**/*.{png,jpeg,gif,svg}', ['image']);
 });
 
 gulp.task('build', function(callback) {
-    runSequence('clean', 'html', 'sass', 'js', 'inject', 'image', callback);
+    runSequence('clean', 'html', 'sass', 'js', 'json', 'inject', 'image', callback);
 });
 
 gulp.task('html', function() {
@@ -52,6 +53,12 @@ gulp.task('js', function() {
         .pipe(gulp.dest('dist/scripts'))
         .pipe(browserSync.stream());
 });
+
+gulp.task('json', function() {
+    return gulp.src('./src/**/*.json')
+        .pipe(gulp.dest('dist'))
+        .pipe(browserSync.stream());
+})
 
 gulp.task('inject', function() {
     return gulp.src('./dist/*.html')
