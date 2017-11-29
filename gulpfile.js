@@ -55,8 +55,8 @@ gulp.task('js', function() {
 });
 
 gulp.task('json', function() {
-    return gulp.src('./src/**/*.json')
-        .pipe(gulp.dest('dist'))
+    return gulp.src('./src/scripts/**/*.json')
+        .pipe(gulp.dest('dist/scripts'))
         .pipe(browserSync.stream());
 })
 
